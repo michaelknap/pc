@@ -1,0 +1,45 @@
+[package]
+name = "pc"
+version = "0.1.0"
+edition = "2024"
+description = "Print code files with path delimiters, respecting .gitignore - ideal for feeding into LLMs."
+license = "MIT"
+repository = "https://github.com/michaelknap/pc"
+keywords = ["cli", "llm", "tooling", "code"]
+categories = ["command-line-utilities"]
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.5", features = ["derive"] }
+ignore = "0.4"
+globset = "0.4"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+
+[dev-dependencies]
+assert_cmd = "2"      # CLI testing
+assert_fs  = "1.1"    # temp dirs / files for tests
+predicates = "3.1"    # nice string/stdout predicates
+
+[profile.dev]
+opt-level = 1
+debug = true
+incremental = true
+overflow-checks = true
+debug-assertions = true
+
+[profile.release]
+opt-level = "z"
+lto = "thin"
+codegen-units = 1 
+strip = "debuginfo"
+panic = "abort"
+incremental = false
+debug = false
+overflow-checks = false
+
+[lints.rust]
+unsafe_code = "forbid"
+unused_must_use = "deny"
+unreachable_patterns = "warn"
+missing_debug_implementations = "warn"
